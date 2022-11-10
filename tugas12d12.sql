@@ -193,11 +193,20 @@ INNER JOIN products on products.id =   detail_transaksi.id_produk
 WHERE  products.id_product_type =2
 
 -- ---  part 3 realase 2.4
-SELECT products.id,products.nama, products.id_product_type,product_type.kategori FROM products
-INNER JOIN product_type on  product_type.id =   products.id_product_type
+SELECT * FROM products
+RIGHT JOIN product_type on  product_type.id =   products.id_product_type
 
 
 -- ---  part 3 realase 2.5
-    SELECT detail_transaksi.id_produk,users.name,  transactions.total_qty ,transactions.total_transaksi FROM transactions
-    INNER JOIN detail_transaksi on  detail_transaksi.id_transaksi =   transactions.id
-    INNER JOIN users on  users.id =   transactions.user_id
+  SELECT * FROM transactions
+    LEFT JOIN  detail_transaksi on transactions.id  =   detail_transaksi.id_transaksi 
+   RIGHT join     users on  users.id =   transactions.user_id
+   inner JOIN products on products.id = detail_transaksi.id_produk
+
+
+-- ---  part 3 realase 2.8
+
+SELECT*FROM products WHERE id NOT IN(SELECT DISTINCT id_produk from detail_transaksi)
+
+
+SELECT*FROM detail_transaksi
